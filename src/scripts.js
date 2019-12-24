@@ -17,9 +17,14 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 
+//refactor startApp into smaller functions? 
+//lots of unused parameters 
+//refactor to es6 
+
 function startApp() {
   let userList = [];
   makeUsers(userList);
+  //could have instantiation function 
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
   let sleepRepo = new Sleep(sleepData);
@@ -37,23 +42,25 @@ function startApp() {
   addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
-function makeUsers(array) {
+
+
+const makeUsers = (array) => {
   userData.forEach(function(dataItem) {
     let user = new User(dataItem);
     array.push(user);
   })
 }
 
-function pickUser() {
+const pickUser = () => {
   return Math.floor(Math.random() * 50);
 }
 
-function getUserById(id, listRepo) {
+const getUserById = (id, listRepo) => {
   return listRepo.getDataFromID(id);
 };
 
 
-function addInfoToSidebar(user, userStorage) {
+const addInfoToSidebar = (user, userStorage) => {
   $('#sidebarName').text(user.name);
   $('#headerText').text(`${ user.getFirstName() }'s Activity Tracker`);
   $('#stepGoalCard').text(`Your daily step goal is ${user.dailyStepGoal}.`);
@@ -64,33 +71,35 @@ function addInfoToSidebar(user, userStorage) {
   $('#friendList').html(makeFriendHTML(user, userStorage));
 };
 
-function makeFriendHTML(user, userStorage) {
-  return user.getFriendsNames(userStorage).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
+const makeFriendHTML = (user, userStorage) => {
+  return user.getFriendsNames(userStorage)
+    .map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`)
+    .join('');
 }
 
-function makeWinnerID(activityInfo, user, dateString, userStorage){
-  return activityInfo.getWinnerId(user, dateString, userStorage)
+const makeWinnerID = (activityInfo, user, dateString, userStorage) => {
+  return activityInfo.getWinnerId(user, dateString, userStorage);
 }
 
-function makeToday(userStorage, id, dataSet) {
+const makeToday = (userStorage, id, dataSet) => {
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
   return sortedArray[0].date;
 }
 
-function makeRandomDate(userStorage, id, dataSet) {
+const makeRandomDate = (userStorage, id, dataSet) => {
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
   return sortedArray[Math.floor(Math.random() * sortedArray.length + 1)].date
-
+  
 }
 
-function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
+const addHydrationInfo = (id, hydrationInfo, dateString, userStorage, laterDateString) => {
   $('#hydrationToday').html(`<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
   $('#hydrationAverage').html(`<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`);
-  $('#hydrationThisWeek').html(makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
-  $('#hydrationEarlierWeek').html(makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
+  $('#hydrationThisWeek').html(makeHydrationHTML(hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
+  $('#hydrationEarlierWeek').html(makeHydrationHTML(hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
 }
 
-function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
+const makeHydrationHTML = (method) => {
   return method.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join('');
 }
 
@@ -106,9 +115,10 @@ function makeSleepHTML(id, sleepInfo, userStorage, method) {
   return method.map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`).join('');
 }
 
-function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
-  return method.map(sleepQualityData => `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`).join('');
-}
+//not currently being called?
+// function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
+//   return method.map(sleepQualityData => `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`).join('');
+// }
 
 function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
   $('#userStairsToday').html(`<p>Stair Count:</p><p>You</><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}</span></p>`);
