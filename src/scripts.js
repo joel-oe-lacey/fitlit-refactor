@@ -21,7 +21,7 @@ import UserRepo from './User-repo';
 //lots of unused parameters 
 //refactor to es6 
 
-function startApp() {
+const startApp = () => {
   let userList = [];
   makeUsers(userList);
   //could have instantiation function 
@@ -39,7 +39,7 @@ function startApp() {
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
   addActivityInfo(userNowId, activityRepo, today, userRepo, userNow, winnerNow);
-  addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
+  addFriendGameInfo(userNowId, activityRepo, userRepo, today, userNow);
 }
 
 
@@ -145,20 +145,20 @@ const makeMinutesHTML = (method) => {
   return method.map(data => `<li class="historical-list-listItem">On ${data} minutes</li>`).join('');
 }
 
-function addFriendGameInfo(id, activityInfo, userStorage, dateString, laterDateString, user) {
-  $('#friendChallengeListToday').html(makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage)));
-  $('#streakList').html(makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'numSteps'))); 
-  $('#streakListMinutes').html(makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'minutesActive'))); 
+const addFriendGameInfo = (id, activityInfo, userStorage, dateString, user) => {
+  $('#friendChallengeListToday').html(makeFriendChallengeHTML(activityInfo.showChallengeListAndWinner(user, dateString, userStorage)));
+  $('#streakList').html(makeStepStreakHTML(activityInfo.getStreak(userStorage, id, 'numSteps'))); 
+  $('#streakListMinutes').html(makeStepStreakHTML(activityInfo.getStreak(userStorage, id, 'minutesActive'))); 
 
-  $('#friendChallengeListHistory').html(makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage))); 
+  $('#friendChallengeListHistory').html(makeFriendChallengeHTML(activityInfo.showChallengeListAndWinner(user, dateString, userStorage))); 
   $('#bigWinner').text(`THIS WEEK'S WINNER! ${activityInfo.showcaseWinner(user, dateString, userStorage)} steps`);
 }
 
-function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
+const makeFriendChallengeHTML = (method) => {
   return method.map(friendChallengeData => `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`).join('');
 }
 
-function makeStepStreakHTML(id, activityInfo, userStorage, method) {
+const makeStepStreakHTML = (method) => {
   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
 }
 
