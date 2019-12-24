@@ -38,7 +38,7 @@ function startApp() {
   addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+  addActivityInfo(userNowId, activityRepo, today, userRepo, userNow, winnerNow);
   addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
@@ -103,15 +103,15 @@ const makeHydrationHTML = (method) => {
   return method.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join('');
 }
 
-function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
+const addSleepInfo = (id, sleepInfo, dateString, userStorage, laterDateString) => {
   $('#sleepToday').html(`<p>You slept</p> <p><span class="number">${sleepInfo.calculateDailySleep(id, dateString)}</span></p> <p>hours today.</p>`);
   $('#sleepQualityToday').html(`<p>Your sleep quality was</p> <p><span class="number">${sleepInfo.calculateDailySleepQuality(id, dateString)}</span></p><p>out of 5.</p>`);
   $('#avUserSleepQuality').html(`<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepInfo.calculateAllUserSleepQuality() * 100) / 100}</span></p><p>out of 5.</p>`);
-  $('#sleepThisWeek').html(makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(dateString, id, userStorage)));
-  $('#sleepEarlierWeek').html(makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)));
+  $('#sleepThisWeek').html(makeSleepHTML(sleepInfo.calculateWeekSleep(dateString, id, userStorage)));
+  $('#sleepEarlierWeek').html(makeSleepHTML(sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)));
 }
 
-function makeSleepHTML(id, sleepInfo, userStorage, method) {
+const makeSleepHTML = (method) => {
   return method.map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`).join('');
 }
 
@@ -120,28 +120,28 @@ function makeSleepHTML(id, sleepInfo, userStorage, method) {
 //   return method.map(sleepQualityData => `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`).join('');
 // }
 
-function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
+const addActivityInfo = (id, activityInfo, dateString, userStorage, user, winnerId) => {
   $('#userStairsToday').html(`<p>Stair Count:</p><p>You</><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}</span></p>`);
   $('#avgStairsToday').html(`<p>Stair Count: </p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'flightsOfStairs')}</span></p>`);
   $('#userStepsToday').html(`<p>Step Count:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'numSteps')}</span></p>`);
   $('#avgStepsToday').html(`<p>Step Count:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'numSteps')}</span></p>`);
   $('#userMinutesToday').html(`<p>Active Minutes:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'minutesActive')}</span></p>`);
   $('#avgMinutesToday').html(`<p>Active Minutes:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'minutesActive')}</span></p>`);
-  $('#userStepsThisWeek').html(makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps"))); 
-  $('#userStairsThisWeek').html(makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs"))); 
-  $('#userMinutesThisWeek').html(makeMinutesHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive"))); 
-  $('#bestUserSteps').html(makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps"))); 
+  $('#userStepsThisWeek').html(makeStepsHTML(activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps"))); 
+  $('#userStairsThisWeek').html(makeStairsHTML(activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs"))); 
+  $('#userMinutesThisWeek').html(makeMinutesHTML(activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive"))); 
+  $('#bestUserSteps').html(makeStepsHTML(activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps"))); 
 }
 
-function makeStepsHTML(id, activityInfo, userStorage, method) {
+const makeStepsHTML = (method) => {
   return method.map(activityData => `<li class="historical-list-listItem">On ${activityData} steps</li>`).join('');
 }
 
-function makeStairsHTML(id, activityInfo, userStorage, method) {
+const makeStairsHTML = (method) => {
   return method.map(data => `<li class="historical-list-listItem">On ${data} flights</li>`).join('');
 }
 
-function makeMinutesHTML(id, activityInfo, userStorage, method) {
+const makeMinutesHTML = (method) => {
   return method.map(data => `<li class="historical-list-listItem">On ${data} minutes</li>`).join('');
 }
 
