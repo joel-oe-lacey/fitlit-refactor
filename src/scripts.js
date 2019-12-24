@@ -100,7 +100,9 @@ const addHydrationInfo = (id, hydrationInfo, dateString, userStorage, laterDateS
 }
 
 const makeHydrationHTML = (method) => {
-  return method.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join('');
+  return method
+    .map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`)
+    .join('');
 }
 
 const addSleepInfo = (id, sleepInfo, dateString, userStorage, laterDateString) => {
@@ -112,7 +114,9 @@ const addSleepInfo = (id, sleepInfo, dateString, userStorage, laterDateString) =
 }
 
 const makeSleepHTML = (method) => {
-  return method.map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`).join('');
+  return method
+    .map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`)
+    .join('');
 }
 
 //not currently being called?
@@ -134,15 +138,21 @@ const addActivityInfo = (id, activityInfo, dateString, userStorage, user, winner
 }
 
 const makeStepsHTML = (method) => {
-  return method.map(activityData => `<li class="historical-list-listItem">On ${activityData} steps</li>`).join('');
+  return method
+    .map(activityData => `<li class="historical-list-listItem">On ${activityData} steps</li>`)
+    .join('');
 }
 
 const makeStairsHTML = (method) => {
-  return method.map(data => `<li class="historical-list-listItem">On ${data} flights</li>`).join('');
+  return method
+    .map(data => `<li class="historical-list-listItem">On ${data} flights</li>`)
+    .join('');
 }
 
 const makeMinutesHTML = (method) => {
-  return method.map(data => `<li class="historical-list-listItem">On ${data} minutes</li>`).join('');
+  return method
+    .map(data => `<li class="historical-list-listItem">On ${data} minutes</li>`)
+    .join('')z;
 }
 
 const addFriendGameInfo = (id, activityInfo, userStorage, dateString, user) => {
@@ -153,13 +163,17 @@ const addFriendGameInfo = (id, activityInfo, userStorage, dateString, user) => {
   $('#friendChallengeListHistory').html(makeFriendChallengeHTML(activityInfo.showChallengeListAndWinner(user, dateString, userStorage))); 
   $('#bigWinner').text(`THIS WEEK'S WINNER! ${activityInfo.showcaseWinner(user, dateString, userStorage)} steps`);
 }
-
+  
 const makeFriendChallengeHTML = (method) => {
-  return method.map(friendChallengeData => `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`).join('');
+  return method
+    .map(friendChallengeData => `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`)
+    .join('');
 }
 
 const makeStepStreakHTML = (method) => {
-  return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
+  return method
+    .map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`)
+    .join('');
 }
 
 startApp();
