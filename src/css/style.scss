@@ -1,3 +1,7 @@
+//break into sections
+//create mixins for history cards
+//variable for border? called multiple times
+
 * {
   margin: 0;
 }
@@ -135,9 +139,21 @@ h1 {
   overflow: scroll;
 }
 
-.card-today-hydration {
+@mixin history-card($background) {
   text-align: center;
-  background-color: #5BC8AC;
+  background-color: $background;
+  font-size: 1em;
+  margin: .5em;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+@mixin today-card($background, $width) {
+  text-align: center;
+  background-color: $background;
   height: auto;
   font-size: 1.5em;
   margin: .5em;
@@ -146,68 +162,30 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   width: 80%;
+}
+
+.card-today-hydration {
+  @include today-card(#5BC8AC, 80%);
 }
 
 .card-today-sleep {
-  text-align: center;
-  background-color: #EC96A4;
-  height: auto;
-  font-size: 1.5em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%;
+  @include today-card(#EC96A4, 80%);
 }
 
 .card-today-activity {
-  text-align: center;
-  background-color: #DFE166;
-  height: auto;
-  font-size: 1.5em;
-  margin: .3em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 40%;
+  @include today-card(#DFE166, 40%);
 }
 
 .card-history-hydration {
-  text-align: center;
-  background-color: #5BC8AC;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 50%;
+  @include history-card(#5BC8AC);
 }
 
 .card-history-sleep {
-  text-align: center;
-  background-color: #EC96A4;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 50%;
+  @include history-card(#EC96A4);
 }
 
 .card-history-activity {
-  text-align: center;
-  background-color: #DFE166;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 50%;
+  @include history-card(#DFE166);
   height: 93%;
   overflow: scroll;
 }
