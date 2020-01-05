@@ -1,6 +1,7 @@
 //break into sections
 //create mixins for history cards
 //variable for border? called multiple times
+$dark-border: 1px solid black;
 
 * {
   margin: 0;
@@ -35,7 +36,7 @@ h1 {
 
 .body-sidebar-sidebarContainer {
   background-color: #9A9DAB;
-  border: 1px solid black;
+  border: $dark-border;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,17 +58,14 @@ h1 {
 
 .sidebar-header-line {
   color: #ffffff;
-  border: 1px solid black;
+  border: $dark-border;
   margin: 1em 1em 0 1em;
-  height: 0;
   width: 80%;
 }
 
 .sidebar-header-userImage {
   border-radius: 50%;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
+  border: $dark-border;
   height: 200px;
   width: 200px;
   margin: 4px 2px 2px 2px;
@@ -85,7 +83,7 @@ h1 {
 
 .body-main-infoContainter {
   width: 100%;
-  border: 1px solid black;
+  border: $dark-border;
   margin: 0 0 1em;
   display: flex;
   flex-direction: column;
@@ -113,7 +111,7 @@ h1 {
 .infoContainer-cardContainer-card-horizontal {
   width: 100%;
   background-color: white;
-  border: 1px solid black;
+  border: $dark-border;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,7 +130,7 @@ h1 {
 .infoContainer-cardContainer-card-vertical {
   width: 100%;
   background-color: white;
-  border: 1px solid black;
+  border: $dark-border;
   display: flex;
   flex-direction: row;
   margin: 1%;
@@ -161,7 +159,7 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 80%;
+  width: $width;
 }
 
 .card-today-hydration {
